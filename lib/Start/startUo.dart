@@ -11,6 +11,28 @@ class StartUp extends StatefulWidget {
 class _StartUpState extends State<StartUp> {
   final PageController _cont = PageController();
 
+  ClipRRect buildClipRRect(String img, String text) {
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: 20),
+              child: Image.asset("images/$img", height: 260, width: 260),
+            ),
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Color.fromRGBO(252, 255, 252, 1),
+                  fontFamily: "ReadexPro"),
+            )
+          ],
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,48 +46,10 @@ class _StartUpState extends State<StartUp> {
                   width: double.infinity,
                   child: Stack(children: [
                     PageView(controller: _cont, children: [
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(bottom: 20),
-                                child: Image.asset("images/Agreement-bro.png",
-                                    height: 280, width: 280),
-                              ),
-                              Text(
-                                "نحن اختيارك اذا كان تبحث عن الامان في الصفقات ",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color.fromRGBO(252, 255, 252, 1),
-                                    fontFamily: "ReadexPro"),
-                              )
-                            ],
-                          )),
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(bottom: 20),
-                                child: Image.asset(
-                                    "images/Signing a contract-bro.png",
-                                    height: 260,
-                                    width: 260),
-                              ),
-                              Text(
-                                "سهولة في توقيع العقود بين الطرفين",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color.fromRGBO(252, 255, 252, 1),
-                                    fontFamily: "ReadexPro"),
-                              )
-                            ],
-                          )),
+                      buildClipRRect("Agreement-bro.png",
+                          "نحن اختيارك اذا كان تبحث عن الامان في الصفقات"),
+                      buildClipRRect("Signing a contract-bro.png",
+                          "سهولة في توقيع العقود بين الطرفين"),
                       ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Column(
