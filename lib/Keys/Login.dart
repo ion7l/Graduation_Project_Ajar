@@ -115,8 +115,8 @@ class _LoginState extends State<Login> {
                                     onPressed: () {
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil(
-                                        "login",
-                                        (route) => true,
+                                        "veiwMain",
+                                        (route) => false,
                                       );
                                     },
                                     child: Text(
