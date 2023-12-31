@@ -45,7 +45,9 @@ class _HomeState extends State<Home> {
           iconSize: 37,
           items: [
             FloatingNavbarItem(icon: Icons.home, title: "الرئيسية"),
-            FloatingNavbarItem(icon: Icons.production_quantity_limits_rounded, title: "منتجاتي"),
+            FloatingNavbarItem(
+                icon: Icons.production_quantity_limits_rounded,
+                title: "منتجاتي"),
             FloatingNavbarItem(
               icon: Icons.file_copy_rounded,
               title: "الوثائق",
@@ -92,6 +94,9 @@ class _HomeState extends State<Home> {
                     child: SmoothPageIndicator(
                       controller: _cont,
                       count: 3,
+                      effect: SlideEffect(
+                          dotColor: Color.fromRGBO(0, 119, 141, 1),
+                          activeDotColor: Color.fromRGBO(114, 217, 247, 1)),
                     ),
                   )
                 ],
@@ -104,50 +109,88 @@ class _HomeState extends State<Home> {
               children: [
                 ElevatedButton(
                   onPressed: () {},
-                  style: const ButtonStyle(padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 30, vertical: 5)), elevation: MaterialStatePropertyAll(3), side: MaterialStatePropertyAll(BorderSide(color: Colors.black, width: 1)), backgroundColor: MaterialStatePropertyAll(Colors.white)),
+                  style: const ButtonStyle(
+                      padding: MaterialStatePropertyAll(
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
+                      elevation: MaterialStatePropertyAll(3),
+                      side: MaterialStatePropertyAll(
+                          BorderSide(color: Colors.black, width: 1)),
+                      backgroundColor: MaterialStatePropertyAll(Colors.white)),
                   child: const Text(
                     "عقار",
-                    style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Color.fromRGBO(37, 37, 37, 1),
+                        fontFamily: "ReadexPro"),
                   ),
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {},
-                  style: const ButtonStyle(padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 30, vertical: 5)), elevation: MaterialStatePropertyAll(3), side: MaterialStatePropertyAll(BorderSide(color: Colors.black, width: 1)), backgroundColor: MaterialStatePropertyAll(Colors.white)),
+                  style: const ButtonStyle(
+                      padding: MaterialStatePropertyAll(
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
+                      elevation: MaterialStatePropertyAll(3),
+                      side: MaterialStatePropertyAll(
+                          BorderSide(color: Colors.black, width: 1)),
+                      backgroundColor: MaterialStatePropertyAll(Colors.white)),
                   child: const Text(
                     "مركبات",
-                    style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Color.fromRGBO(37, 37, 37, 1),
+                        fontFamily: "ReadexPro"),
                   ),
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {},
-                  style: const ButtonStyle(padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 30, vertical: 5)), elevation: MaterialStatePropertyAll(3), side: MaterialStatePropertyAll(BorderSide(color: Colors.black, width: 1)), backgroundColor: MaterialStatePropertyAll(Colors.white)),
+                  style: const ButtonStyle(
+                      padding: MaterialStatePropertyAll(
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
+                      elevation: MaterialStatePropertyAll(3),
+                      side: MaterialStatePropertyAll(
+                          BorderSide(color: Colors.black, width: 1)),
+                      backgroundColor: MaterialStatePropertyAll(Colors.white)),
                   child: const Text(
                     "اجهزة اكترونية",
-                    style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Color.fromRGBO(37, 37, 37, 1),
+                        fontFamily: "ReadexPro"),
                   ),
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {},
-                  style: const ButtonStyle(padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 30, vertical: 5)), elevation: MaterialStatePropertyAll(3), side: MaterialStatePropertyAll(BorderSide(color: Colors.black, width: 1)), backgroundColor: MaterialStatePropertyAll(Colors.white)),
+                  style: const ButtonStyle(
+                      padding: MaterialStatePropertyAll(
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
+                      elevation: MaterialStatePropertyAll(3),
+                      side: MaterialStatePropertyAll(
+                          BorderSide(color: Colors.black, width: 1)),
+                      backgroundColor: MaterialStatePropertyAll(Colors.white)),
                   child: const Text(
                     "أخرى",
-                    style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Color.fromRGBO(37, 37, 37, 1),
+                        fontFamily: "ReadexPro"),
                   ),
                 )
               ],
             ),
           ),
           const Divider(
-            height: 10,
+            color: Colors.transparent,
+            height: 5,
           ),
           // Is Code The Item
           GridView(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.85),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, childAspectRatio: 0.84),
             children: [
               Card(
                 shape: RoundedRectangleBorder(
@@ -156,6 +199,7 @@ class _HomeState extends State<Home> {
                 elevation: 7,
                 margin: EdgeInsets.all(10),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.only(
@@ -170,116 +214,101 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(7.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 7.0),
                       child: Row(
                         children: [
                           Container(
-                            width: 50,
-                            decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(15)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 3),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(85, 164, 195, 1),
+                                borderRadius: BorderRadius.circular(15)),
                             child: Text(
                               'النوع',
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(252, 255, 252, 1),
+                                  fontFamily: "ReadexPro"),
                             ),
                           ),
                           SizedBox(
                             width: 13,
                           ),
                           Container(
-                            width: 50,
-                            decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(15)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 3),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(85, 164, 195, 1),
+                                borderRadius: BorderRadius.circular(15)),
                             child: Text(
                               'المنطقة',
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(252, 255, 252, 1),
+                                  fontFamily: "ReadexPro"),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 7, right: 7),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'اسم المنتج',
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(37, 37, 37, 1),
+                                fontFamily: "ReadexPro"),
                           ),
                           Text(
                             'السعر',
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(37, 37, 37, 1),
+                                fontFamily: "ReadexPro"),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 7, right: 7),
-                      child: Container(
-                        width: double.infinity,
-                        child: TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                      padding:
+                          const EdgeInsets.only(left: 7, right: 7, bottom: 2),
+                      child: TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 55),
+                            backgroundColor: Color.fromRGBO(0, 30, 65, 1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Text(
-                              'اطلاع',
-                              style: TextStyle(
-                                fontSize: 16,
+                          ),
+                          child: Text(
+                            'اطلاع',
+                            style: TextStyle(
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            )),
-                      ),
-                    )
+                                color: Color.fromRGBO(252, 255, 252, 1),
+                                fontFamily: "ReadexPro"),
+                          )),
+                    ),
                   ],
                 ),
               ),
             ],
-          ),
-          const Divider(
-            height: 90,
           ),
         ],
       ),
     );
   }
 }
-
-
-
-
-
-          // Row(
-          //   children: [
-          //     Card(
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(15),
-          //       ),
-          //       elevation: 7,
-          //       margin: EdgeInsets.all(10),
-          //       child: Column(
-          //         children: [
-          //           ClipRRect(
-          //             borderRadius: BorderRadius.only(
-          //               topLeft: Radius.circular(15),
-          //               topRight: Radius.circular(15),
-          //             ),
-          //             child: Image.network(
-          //               'https://wallpapers.com/images/featured-full/laptop-murjp1nk4lp1idlt.jpg',
-          //               height: 83,
-          //               width: double.infinity,
-          //               fit: BoxFit.cover,
-          //             ),
-          //           ),
-          //           Container(),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),

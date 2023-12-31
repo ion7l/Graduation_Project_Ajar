@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Keys/Login.dart';
 import 'package:graduation_project/Keys/Sinup.dart';
 import 'package:graduation_project/veiwUser/main_veiw.dart';
+import 'package:graduation_project/veiwUser/new_name.dart';
 import 'package:provider/provider.dart';
 import 'Start/start.dart';
 
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
             "start": (context) => Start(),
             "login": (context) => Login(),
             "sinup": (context) => Sinup(),
-            "veiwMain": (context) => MainVeiw()
+            "veiwMain": (context) => MainVeiw(),
+            "newName":(context) => NewName()
           },
         ));
   }
