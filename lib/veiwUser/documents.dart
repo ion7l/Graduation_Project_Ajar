@@ -48,7 +48,10 @@ class _DocumentsState extends State<Documents> {
         ),
       ),
       body: const Center(
-        child: Text("Documents"),
+        child: Text(
+          "جاري العمل",
+          style: TextStyle(fontSize: 28),
+        ),
       ),
     );
   }

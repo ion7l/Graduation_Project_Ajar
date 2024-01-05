@@ -36,7 +36,9 @@ class _ProductsState extends State<Products> {
           iconSize: 37,
           items: [
             FloatingNavbarItem(icon: Icons.home, title: "الرئيسية"),
-            FloatingNavbarItem(icon: Icons.production_quantity_limits_rounded, title: "منتجاتي"),
+            FloatingNavbarItem(
+                icon: Icons.production_quantity_limits_rounded,
+                title: "منتجاتي"),
             FloatingNavbarItem(
               icon: Icons.file_copy_rounded,
               title: "الوثائق",
@@ -47,7 +49,10 @@ class _ProductsState extends State<Products> {
         ),
       ),
       body: const Center(
-        child: Text("Products"),
+        child: Text(
+          "جاري العمل",
+          style: TextStyle(fontSize: 28),
+        ),
       ),
     );
   }

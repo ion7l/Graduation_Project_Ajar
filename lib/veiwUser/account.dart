@@ -125,7 +125,10 @@ class _AccountState extends State<Account> {
                 ],
               ),
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        "newPassword", (route) => true);
+                  },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
                     backgroundColor: Color.fromRGBO(252, 255, 252, 1),
