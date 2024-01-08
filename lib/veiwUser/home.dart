@@ -285,7 +285,12 @@ class _HomeState extends State<Home> {
                       padding:
                           const EdgeInsets.only(left: 7, right: 7, bottom: 2),
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              "productHome",
+                              (route) => true,
+                            );
+                          },
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.symmetric(horizontal: 55),
                             backgroundColor: Color.fromRGBO(0, 30, 65, 1),
