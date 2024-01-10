@@ -11,8 +11,11 @@ class ProductHome extends StatefulWidget {
 }
 
 class _ProductHomeState extends State<ProductHome> {
+  bool checRead = false;
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
@@ -138,7 +141,141 @@ class _ProductHomeState extends State<ProductHome> {
                             width: double.infinity,
                             height: double.infinity,
                             child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => StatefulBuilder(
+                                          builder:
+                                              (context, setState) =>
+                                                  AlertDialog(
+                                                    content: Container(
+                                                      width: screenWidth * 0.90,
+                                                      height:
+                                                          screenHeight * 0.60,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Flexible(
+                                                            flex: 6,
+                                                            child: ListView(
+                                                              children: [
+                                                                Text(
+                                                                  'محتوى الشروط',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          22,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color: Color
+                                                                          .fromRGBO(
+                                                                              37,
+                                                                              37,
+                                                                              37,
+                                                                              1),
+                                                                      fontFamily:
+                                                                          "ReadexPro"),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Flexible(
+                                                            flex: 2,
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: [
+                                                                    Text(
+                                                                      'تم الاطلع على الشروط',
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          color: Color.fromRGBO(
+                                                                              37,
+                                                                              37,
+                                                                              37,
+                                                                              1),
+                                                                          fontFamily:
+                                                                              "ReadexPro"),
+                                                                    ),
+                                                                    Checkbox(
+                                                                        value:
+                                                                            checRead,
+                                                                        onChanged:
+                                                                            (val) {
+                                                                          checRead =
+                                                                              val!;
+                                                                          setState(
+                                                                              () {});
+                                                                        }),
+                                                                  ],
+                                                                ),
+                                                                Container(
+                                                                  width: double
+                                                                      .infinity,
+                                                                  child: TextButton(
+                                                                      onPressed: () {},
+                                                                      style: TextButton.styleFrom(
+                                                                        padding:
+                                                                            EdgeInsets.symmetric(vertical: 15),
+                                                                        backgroundColor: checRead ==
+                                                                                true
+                                                                            ? Color.fromRGBO(
+                                                                                0,
+                                                                                30,
+                                                                                65,
+                                                                                1)
+                                                                            : Color.fromRGBO(
+                                                                                0,
+                                                                                30,
+                                                                                65,
+                                                                                0.5),
+                                                                        shape:
+                                                                            RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10),
+                                                                        ),
+                                                                      ),
+                                                                      child: Text(
+                                                                        'موافق',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                17,
+                                                                            fontWeight: FontWeight
+                                                                                .bold,
+                                                                            color: Color.fromRGBO(
+                                                                                252,
+                                                                                255,
+                                                                                252,
+                                                                                1),
+                                                                            fontFamily:
+                                                                                "ReadexPro"),
+                                                                      )),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )));
+                                },
                                 style: TextButton.styleFrom(
                                   backgroundColor:
                                       Color.fromRGBO(252, 255, 252, 1),
