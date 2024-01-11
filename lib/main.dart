@@ -5,6 +5,7 @@ import 'package:graduation_project/veiwUser/account/new_Password.dart';
 import 'package:graduation_project/veiwUser/home/product_home.dart';
 import 'package:graduation_project/veiwUser/main_veiw.dart';
 import 'package:graduation_project/veiwUser/account/new_name.dart';
+import 'package:graduation_project/veiwUser/products/product.dart';
 import 'package:provider/provider.dart';
 import 'Start/start.dart';
 
@@ -31,9 +32,10 @@ class MyApp extends StatelessWidget {
             "login": (context) => Login(),
             "sinup": (context) => Sinup(),
             "veiwMain": (context) => MainVeiw(),
-            "newName":(context) => NewName(),
-            "newPassword":(context) => NewPassword(),
-            "productHome":(context) => ProductHome(),
+            "newName": (context) => NewName(),
+            "newPassword": (context) => NewPassword(),
+            "productHome": (context) => ProductHome(),
+            "product": (context) => Product(),
           },
         ));
   }

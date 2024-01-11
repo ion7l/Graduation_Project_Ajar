@@ -162,6 +162,13 @@ class _ProductsState extends State<Products> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromRGBO(0, 39, 65, 1),
+        onPressed: () {
+          Navigator.of(context).pushNamedAndRemoveUntil("product", (route) => true);
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
