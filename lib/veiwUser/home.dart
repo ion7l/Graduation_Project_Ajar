@@ -1,9 +1,12 @@
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/veiwUser/home/CardHome.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../func/Logic.dart';
+import '../func/fin.dart';
+import '../main.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,7 +16,33 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int indexImg = 0;
   final PageController _cont = PageController();
+
+  Crud _crud = Crud();
+
+  String on = "*";
+
+  getItems() async {
+    var response = await _crud.postResponse(
+        "http://10.0.2.2/graduation_project_ajar/SelectItems.php", {"Sel": on});
+    return response;
+  }
+
+  getItemsImg() async {
+    var response = await _crud.postResponse(
+        "http://10.0.2.2/graduation_project_ajar/SelectItemsImg.php",
+        {"Sel": "*"});
+    if (response["status"] == "success") {
+      indexImg = response['Data'].length;
+      if (indexImg > 3) {
+        indexImg = 3;
+      }
+      return response;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,39 +95,58 @@ class _HomeState extends State<Home> {
               height: 200,
               child: Stack(
                 children: [
-                  PageView(controller: _cont, children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        "https://t0.gstatic.com/licensed-image?q=tbn:ANd9GcTwGTmgN4WclFT5_MqG2LWj9nSsaabJ_hdFIxxBFf_SPblOvYwmOQdGu6cSOEmULMLm595LQ_FahMEgDtjqqDU",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        'https://wallpapers.com/images/featured-full/laptop-murjp1nk4lp1idlt.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        'https://wallpapers.com/images/featured/house-u7pcf18vqolaatio.webp',
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  ]),
-                  Container(
-                    alignment: const Alignment(0, 1.3),
-                    child: SmoothPageIndicator(
-                      controller: _cont,
-                      count: 3,
-                      effect: SlideEffect(
-                          dotColor: Color.fromRGBO(0, 119, 141, 1),
-                          activeDotColor: Color.fromRGBO(114, 217, 247, 1)),
-                    ),
-                  )
+                  FutureBuilder(
+                      future: getItemsImg(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData &&
+                            snapshot.data['status'] != 'fail') {
+                          return PageView.builder(
+                            controller: _cont,
+                            itemCount: indexImg,
+                            itemBuilder: (context, index) {
+                              return AppBarImg(
+                                  snapshot.data['Data'][index]['pahtImg'],
+                                  snapshot.data['Data'][index]['ID']);
+                            },
+                          );
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return Center(
+                          child: Text(""),
+                        );
+                      }),
+                  FutureBuilder(
+                      future: getItemsImg(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData &&
+                            snapshot.data['status'] != 'fail') {
+                          return Container(
+                            alignment: const Alignment(0, 1.3),
+                            child: SmoothPageIndicator(
+                              controller: _cont,
+                              count: indexImg,
+                              effect: SlideEffect(
+                                  dotColor: Color.fromRGBO(0, 119, 141, 1),
+                                  activeDotColor:
+                                      Color.fromRGBO(114, 217, 247, 1)),
+                            ),
+                          );
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return Center(
+                          child: Text(""),
+                        );
+                      })
                 ],
               )),
           SingleChildScrollView(
@@ -108,7 +156,31 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    on = "*";
+                    setState(() {});
+                  },
+                  style: const ButtonStyle(
+                      padding: MaterialStatePropertyAll(
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
+                      elevation: MaterialStatePropertyAll(3),
+                      side: MaterialStatePropertyAll(
+                          BorderSide(color: Colors.black, width: 1)),
+                      backgroundColor: MaterialStatePropertyAll(Colors.white)),
+                  child: const Text(
+                    "الكل",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Color.fromRGBO(37, 37, 37, 1),
+                        fontFamily: "ReadexPro"),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    on = "عقار";
+                    setState(() {});
+                  },
                   style: const ButtonStyle(
                       padding: MaterialStatePropertyAll(
                           EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
@@ -126,7 +198,10 @@ class _HomeState extends State<Home> {
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    on = "مركبات";
+                    setState(() {});
+                  },
                   style: const ButtonStyle(
                       padding: MaterialStatePropertyAll(
                           EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
@@ -144,7 +219,10 @@ class _HomeState extends State<Home> {
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    on = "اجهزة اكترونية";
+                    setState(() {});
+                  },
                   style: const ButtonStyle(
                       padding: MaterialStatePropertyAll(
                           EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
@@ -162,7 +240,10 @@ class _HomeState extends State<Home> {
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    on = "اخرى";
+                    setState(() {});
+                  },
                   style: const ButtonStyle(
                       padding: MaterialStatePropertyAll(
                           EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
@@ -186,133 +267,64 @@ class _HomeState extends State<Home> {
             height: 5,
           ),
           // Is Code The Item
-          GridView(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 0.84),
-            children: [
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                elevation: 7,
-                margin: EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15),
-                      ),
-                      child: Image.network(
-                        'https://wallpapers.com/images/featured-full/laptop-murjp1nk4lp1idlt.jpg',
-                        height: 100,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 7.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 3),
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(85, 164, 195, 1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Text(
-                              'النوع',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(252, 255, 252, 1),
-                                  fontFamily: "ReadexPro"),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 13,
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 3),
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(85, 164, 195, 1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Text(
-                              'المنطقة',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(252, 255, 252, 1),
-                                  fontFamily: "ReadexPro"),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'اسم المنتج',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(37, 37, 37, 1),
-                                fontFamily: "ReadexPro"),
-                          ),
-                          Text(
-                            'السعر',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(37, 37, 37, 1),
-                                fontFamily: "ReadexPro"),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 7, right: 7, bottom: 2),
-                      child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                              "productHome",
-                              (route) => true,
-                            );
+          ListView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                FutureBuilder(
+                    future: getItems(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData &&
+                          snapshot.data['status'] != 'fail') {
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, childAspectRatio: 0.75),
+                          itemCount: snapshot.data['Data'].length,
+                          itemBuilder: (context, index) {
+                            return CardHome(
+                                type: snapshot.data['Data'][index]['type'],
+                                Loc: snapshot.data['Data'][index]['region'],
+                                name: snapshot.data['Data'][index]['name'],
+                                prise: snapshot.data['Data'][index]['price'],
+                                img: snapshot.data['Data'][index]['pahtImg'],
+                                id: snapshot.data['Data'][index]['ID']
+                                    .toString());
                           },
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 55),
-                            backgroundColor: Color.fromRGBO(0, 30, 65, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: Text(
-                            'اطلاع',
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(252, 255, 252, 1),
-                                fontFamily: "ReadexPro"),
-                          )),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+                        );
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return Center(
+                        child: Text(""),
+                      );
+                    }),
+              ]),
         ],
+      ),
+    );
+  }
+
+  AppBarImg(String img, int id) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: InkWell(
+        onTap: () {
+          sharedPreferences.setString("idItem", "$id");
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            "productHome",
+            (route) => true,
+          );
+        },
+        child: Image.network(
+          "http://192.168.1.36/graduation_project_ajar/upload/$img",
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

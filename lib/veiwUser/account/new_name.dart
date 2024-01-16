@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../func/fin.dart';
+import '../../main.dart';
+
 class NewName extends StatefulWidget {
   const NewName({super.key});
 
@@ -8,6 +11,45 @@ class NewName extends StatefulWidget {
 }
 
 class _NewNameState extends State<NewName> {
+  final TextEditingController name = new TextEditingController();
+
+  GlobalKey<FormState> formMyData = new GlobalKey<FormState>();
+
+  Crud _crud = Crud();
+
+  getDataMy() async {
+    var response = await _crud.postResponse(
+        "http://10.0.2.2/graduation_project_ajar/Select.php",
+        {"id": sharedPreferences.getString("id")});
+    if (response['status'] == "success") {
+      name.text = response['Data']['name'];
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getDataMy();
+  }
+
+  sendData() async {
+    var formData = formMyData.currentState;
+    if (formData!.validate()) {
+      var response = await _crud.postResponse(
+        "http://10.0.2.2/graduation_project_ajar/MyDataupdata.php",
+        {
+          "id": sharedPreferences.getString("id"),
+          "name": name.text,
+        },
+      );
+      if (response['status'] == "success") {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil("veiwMain", (route) => false);
+      } else {}
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.height;
@@ -35,24 +77,28 @@ class _NewNameState extends State<NewName> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                          textDirection: TextDirection.rtl,
-                          decoration: const InputDecoration(
-                            labelText: "الاسم",
-                            contentPadding: EdgeInsets.all(25),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromRGBO(37, 37, 37, 1)),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromRGBO(37, 37, 37, 1)),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
-                          )),
+                      child: Form(
+                        key: formMyData,
+                        child: TextFormField(
+                            controller: name,
+                            textDirection: TextDirection.rtl,
+                            decoration: const InputDecoration(
+                              labelText: "الاسم",
+                              contentPadding: EdgeInsets.all(25),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 2,
+                                      color: Color.fromRGBO(37, 37, 37, 1)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30))),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 2,
+                                      color: Color.fromRGBO(37, 37, 37, 1)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30))),
+                            )),
+                      ),
                     ),
                     Container(
                       width: double.infinity,
@@ -63,7 +109,9 @@ class _NewNameState extends State<NewName> {
                           style: ButtonStyle(
                               padding: MaterialStatePropertyAll(
                                   EdgeInsets.symmetric(vertical: 20))),
-                          onPressed: () {},
+                          onPressed: () async {
+                            sendData();
+                          },
                           child: Text(
                             "حفظ",
                             textAlign: TextAlign.center,

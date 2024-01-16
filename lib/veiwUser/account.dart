@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../func/Logic.dart';
+import '../func/fin.dart';
+import '../main.dart';
 
 class Account extends StatefulWidget {
   const Account({super.key});
@@ -12,6 +14,28 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  Crud _crud = Crud();
+
+  String name = "";
+
+  // ignore: non_constant_identifier_names
+  SelectData() async {
+    var response = await _crud.postResponse(
+        "http://10.0.2.2/graduation_project_ajar/Select.php",
+        {"id": sharedPreferences.getString("id")});
+
+    if (response['status'] == "success") {
+      name = response['Data']['name'];
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SelectData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +81,7 @@ class _AccountState extends State<Account> {
                         borderRadius: BorderRadius.circular(40)),
                   ),
                   Text(
-                    "الاسم",
+                    "$name",
                     style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
@@ -169,7 +193,12 @@ class _AccountState extends State<Account> {
                 ],
               ),
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    sharedPreferences.setString("id", "");
+                    // ignore: dead_code
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil("start", (route) => false);
+                  },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
                     backgroundColor: Color.fromRGBO(255, 146, 146, 0.25),

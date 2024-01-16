@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../func/Logic.dart';
+import '../func/fin.dart';
+import '../main.dart';
+import 'documents/documentsCard.dart';
 
 class Documents extends StatefulWidget {
   const Documents({super.key});
@@ -12,6 +15,15 @@ class Documents extends StatefulWidget {
 }
 
 class _DocumentsState extends State<Documents> {
+  Crud _crud = Crud();
+
+  getDoc() async {
+    var response = await _crud.postResponse(
+        "http://10.0.2.2/graduation_project_ajar/SelectDocument.php",
+        {"id": sharedPreferences.getString("id")});
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +47,9 @@ class _DocumentsState extends State<Documents> {
           iconSize: 37,
           items: [
             FloatingNavbarItem(icon: Icons.home, title: "الرئيسية"),
-            FloatingNavbarItem(icon: Icons.production_quantity_limits_rounded, title: "منتجاتي"),
+            FloatingNavbarItem(
+                icon: Icons.production_quantity_limits_rounded,
+                title: "منتجاتي"),
             FloatingNavbarItem(
               icon: Icons.file_copy_rounded,
               title: "الوثائق",
@@ -47,36 +61,31 @@ class _DocumentsState extends State<Documents> {
       ),
       body: ListView(
         children: [
-          Container(
-            height: 100,
-            width: double.infinity,
-            child: InkWell(
-              onTap: () {},
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                elevation: 7,
-                margin: EdgeInsets.all(10),
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 20, left: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'اسم العقد-رقمه',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        Icons.file_copy_rounded,
-                        size: 25,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          )
+          FutureBuilder(
+              future: getDoc(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData && snapshot.data['status'] != 'fail') {
+                  return ListView.builder(
+                    itemCount: snapshot.data['Data'].length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return DocumentsCard(
+                        name: snapshot.data['Data'][index]['name'],
+                        id: snapshot.data['Data'][index]['ID'],
+                      );
+                    },
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Center(
+                  child: Text(""),
+                );
+              })
         ],
       ),
     );
