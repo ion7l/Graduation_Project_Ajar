@@ -8,7 +8,7 @@ class CardPro extends StatelessWidget {
 
   DeleItm() async {
     var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/Dele.php",
+        "https://deepmindksa.com/graduation_project_ajar/Dele.php",
         {"id": sharedPreferences.getString("idItem"), "img": img});
   }
 
@@ -39,7 +39,7 @@ class CardPro extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(5),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +156,7 @@ class CardPro extends StatelessWidget {
                     bottomLeft: Radius.circular(5),
                   ),
                   child: Image.network(
-                    "http://192.168.1.36/graduation_project_ajar/upload/$img",
+                    "https://deepmindksa.com/graduation_project_ajar/upload/$img",
                     fit: BoxFit.cover,
                   ),
                 ),

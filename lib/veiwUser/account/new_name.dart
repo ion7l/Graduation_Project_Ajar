@@ -19,7 +19,7 @@ class _NewNameState extends State<NewName> {
 
   getDataMy() async {
     var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/Select.php",
+        "https://deepmindksa.com/graduation_project_ajar/Select.php",
         {"id": sharedPreferences.getString("id")});
     if (response['status'] == "success") {
       name.text = response['Data']['name'];
@@ -37,7 +37,7 @@ class _NewNameState extends State<NewName> {
     var formData = formMyData.currentState;
     if (formData!.validate()) {
       var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/MyDataupdata.php",
+        "https://deepmindksa.com/graduation_project_ajar/MyDataupdata.php",
         {
           "id": sharedPreferences.getString("id"),
           "name": name.text,

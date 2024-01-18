@@ -31,7 +31,7 @@ class _UpdataState extends State<Updata> {
 
   getProMy() async {
     var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/SelectItem.php",
+        "https://deepmindksa.com/graduation_project_ajar/SelectItem.php",
         {"idItem": sharedPreferences.getString("idItem")});
     if (response['status'] == "success") {
       name.text = response['Data']['name'];
@@ -55,7 +55,7 @@ class _UpdataState extends State<Updata> {
       var response;
       if (myfile != null) {
         response = await _crud.postRequestwithFile(
-            "http://10.0.2.2/graduation_project_ajar/porductupdata.php",
+            "https://deepmindksa.com/graduation_project_ajar/porductupdata.php",
             {
               "name": name.text,
               "descrep": descrep.text,
@@ -67,7 +67,7 @@ class _UpdataState extends State<Updata> {
             myfile!);
       } else {
         response = await _crud.postResponse(
-          "http://10.0.2.2/graduation_project_ajar/porductupdata.php",
+          "https://deepmindksa.com/graduation_project_ajar/porductupdata.php",
           {
             "name": name.text,
             "descrep": descrep.text,
@@ -429,27 +429,26 @@ class _UpdataState extends State<Updata> {
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(top: 5),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(0, 30, 65, 1),
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: TextButton(
-                        onPressed: () async {
-                          sendPorduct();
-                        },
-                        child: Text(
-                          "تعديل",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(252, 255, 252, 1),
-                              fontFamily: "ReadexPro"),
-                        )),
-                  ),
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  width: double.infinity,
+                  height: 70,
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 30, 65, 1),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  child: TextButton(
+                      onPressed: () async {
+                        sendPorduct();
+                      },
+                      child: Text(
+                        "تعديل",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(252, 255, 252, 1),
+                            fontFamily: "ReadexPro"),
+                      )),
                 ),
               ],
             ),

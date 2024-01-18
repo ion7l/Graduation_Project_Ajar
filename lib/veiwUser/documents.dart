@@ -19,7 +19,7 @@ class _DocumentsState extends State<Documents> {
 
   getDoc() async {
     var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/SelectDocument.php",
+        "https://deepmindksa.com/graduation_project_ajar/SelectDocument.php",
         {"id": sharedPreferences.getString("id")});
     return response;
   }

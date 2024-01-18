@@ -25,13 +25,14 @@ class _HomeState extends State<Home> {
 
   getItems() async {
     var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/SelectItems.php", {"Sel": on});
+        "https://deepmindksa.com/graduation_project_ajar/SelectItems.php",
+        {"Sel": on});
     return response;
   }
 
   getItemsImg() async {
     var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/SelectItemsImg.php",
+        "https://deepmindksa.com/graduation_project_ajar/SelectItemsImg.php",
         {"Sel": "*"});
     if (response["status"] == "success") {
       indexImg = response['Data'].length;
@@ -281,7 +282,7 @@ class _HomeState extends State<Home> {
                           physics: NeverScrollableScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2, childAspectRatio: 0.75),
+                                  crossAxisCount: 2, childAspectRatio: 0.70),
                           itemCount: snapshot.data['Data'].length,
                           itemBuilder: (context, index) {
                             return CardHome(
@@ -322,7 +323,7 @@ class _HomeState extends State<Home> {
           );
         },
         child: Image.network(
-          "http://192.168.1.36/graduation_project_ajar/upload/$img",
+          "https://deepmindksa.com/graduation_project_ajar/upload/$img",
           fit: BoxFit.cover,
         ),
       ),

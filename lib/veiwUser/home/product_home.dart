@@ -21,14 +21,14 @@ class _ProductHomeState extends State<ProductHome> {
 
   getItem() async {
     var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/SelectItem.php",
+        "https://deepmindksa.com/graduation_project_ajar/SelectItem.php",
         {"idItem": sharedPreferences.getString("idItem")});
     return response;
   }
 
   sendhired(id, Idlessor, nameItme) async {
     var response = await _crud.postResponse(
-      "http://10.0.2.2/graduation_project_ajar/hired.php",
+      "https://deepmindksa.com/graduation_project_ajar/hired.php",
       {
         "idItme": id,
         "nameItme": nameItme,
@@ -57,17 +57,17 @@ class _ProductHomeState extends State<ProductHome> {
                   if (snapshot.hasData) {
                     return Image(
                       image: NetworkImage(
-                          "http://192.168.1.36/graduation_project_ajar/upload/${snapshot.data["Data"]["pahtImg"]}"),
+                          "https://deepmindksa.com/graduation_project_ajar/upload/${snapshot.data["Data"]["pahtImg"]}"),
                       fit: BoxFit.cover,
                     );
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
-                      child: Text("Loading...."),
+                      child: CircularProgressIndicator(),
                     );
                   }
                   return Center(
-                    child: Text("Loading...."),
+                    child: Text(""),
                   );
                 }),
             backgroundColor: Colors.transparent,
@@ -254,11 +254,11 @@ class _ProductHomeState extends State<ProductHome> {
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: Text("Loading...."),
+                    child: CircularProgressIndicator(),
                   );
                 }
                 return Center(
-                  child: Text("Loading...."),
+                  child: Text(""),
                 );
               }),
         ));

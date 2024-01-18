@@ -21,7 +21,7 @@ class _AccountState extends State<Account> {
   // ignore: non_constant_identifier_names
   SelectData() async {
     var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/Select.php",
+        "https://deepmindksa.com/graduation_project_ajar/Select.php",
         {"id": sharedPreferences.getString("id")});
 
     if (response['status'] == "success") {

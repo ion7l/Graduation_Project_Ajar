@@ -20,7 +20,7 @@ class _ProductsState extends State<Products> with Crud {
 
   getPro() async {
     var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/SelectProMy.php",
+        "https://deepmindksa.com/graduation_project_ajar/SelectProMy.php",
         {"id": sharedPreferences.getString("id")});
     return response;
   }

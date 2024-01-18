@@ -19,7 +19,7 @@ class _DocumentState extends State<Document> {
 
   SelectData() async {
     var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/SelectDocumentItems.php",
+        "https://deepmindksa.com/graduation_project_ajar/SelectDocumentItems.php",
         {"id": sharedPreferences.getString("idItem")});
 
     if (response['status'] == "success") {

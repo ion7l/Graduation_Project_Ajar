@@ -24,7 +24,7 @@ class _NewPasswordState extends State<NewPassword> {
     var formData = formMyData.currentState;
     if (formData!.validate()) {
       var response = await _crud.postResponse(
-        "http://10.0.2.2/graduation_project_ajar/PasswordUpdata.php",
+        "https://deepmindksa.com/graduation_project_ajar/PasswordUpdata.php",
         {
           "id": sharedPreferences.getString("id"),
           "password": password.text,

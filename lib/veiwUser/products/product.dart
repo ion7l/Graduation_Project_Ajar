@@ -47,7 +47,7 @@ class _ProductState extends State<Product> {
       var formData = formProduct.currentState;
       if (formData!.validate()) {
         var response = await _crud.postRequestwithFile(
-            "http://10.0.2.2/graduation_project_ajar/porductupload.php",
+            "https://deepmindksa.com/graduation_project_ajar/porductupload.php",
             {
               "name": name.text,
               "descrep": descrep.text,
@@ -409,27 +409,26 @@ class _ProductState extends State<Product> {
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(top: 5),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(0, 30, 65, 1),
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: TextButton(
-                        onPressed: () async {
-                          sendPorduct();
-                        },
-                        child: Text(
-                          "نشر",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(252, 255, 252, 1),
-                              fontFamily: "ReadexPro"),
-                        )),
-                  ),
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  width: double.infinity,
+                  height: 70,
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 30, 65, 1),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  child: TextButton(
+                      onPressed: () async {
+                        sendPorduct();
+                      },
+                      child: Text(
+                        "نشر",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(252, 255, 252, 1),
+                            fontFamily: "ReadexPro"),
+                      )),
                 ),
               ],
             ),

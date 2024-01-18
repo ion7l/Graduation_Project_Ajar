@@ -36,7 +36,7 @@ class CardHome extends StatelessWidget {
               topRight: Radius.circular(15),
             ),
             child: Image.network(
-              "http://192.168.1.36/graduation_project_ajar/upload/$img",
+              "https://deepmindksa.com/graduation_project_ajar/upload/$img",
               height: 100,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -107,29 +107,31 @@ class CardHome extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 7, right: 7, bottom: 2),
             child: Center(
-              child: TextButton(
-                  onPressed: () {
-                    sharedPreferences.setString("idItem", "$id");
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      "productHome",
-                      (route) => true,
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 55),
-                    backgroundColor: Color.fromRGBO(0, 30, 65, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: double.infinity,
+                child: TextButton(
+                    onPressed: () {
+                      sharedPreferences.setString("idItem", "$id");
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        "productHome",
+                        (route) => true,
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(0, 30, 65, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    'اطلاع',
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(252, 255, 252, 1),
-                        fontFamily: "ReadexPro"),
-                  )),
+                    child: Text(
+                      'اطلاع',
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromRGBO(252, 255, 252, 1),
+                          fontFamily: "ReadexPro"),
+                    )),
+              ),
             ),
           ),
         ],

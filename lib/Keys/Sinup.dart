@@ -26,7 +26,7 @@ class _SinupState extends State<Sinup> {
     var formData = formSinup.currentState;
     if (formData!.validate()) {
       var response = await _crud
-          .postResponse("http://10.0.2.2/graduation_project_ajar/sinup.php", {
+          .postResponse("https://deepmindksa.com/graduation_project_ajar/sinup.php", {
         "name": nameUser.text,
         "email": email.text,
         "pass": pass.text,
