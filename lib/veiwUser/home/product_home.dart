@@ -326,8 +326,7 @@ class _ProductHomeState extends State<ProductHome> {
                                       child: TextButton(
                                           onPressed: () {
                                             checRead == true
-                                                ? sendhired(
-                                                    id, idlessor, nameItme)
+                                                ? print("التعديل هنا")
                                                 : null;
                                           },
                                           style: TextButton.styleFrom(
