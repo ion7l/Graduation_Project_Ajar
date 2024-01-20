@@ -1,5 +1,6 @@
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../func/fin.dart';
 import '../../main.dart';
@@ -20,9 +21,9 @@ class _ProductHomeState extends State<ProductHome> {
   Crud _crud = Crud();
 
   getItem() async {
-    var response = await _crud.postResponse(
-        "https://deepmindksa.com/graduation_project_ajar/SelectItem.php",
-        {"idItem": sharedPreferences.getString("idItem")});
+    var response = await _crud.postResponse("https://deepmindksa.com/graduation_project_ajar/SelectItem.php", {
+      "idItem": sharedPreferences.getString("idItem")
+    });
     return response;
   }
 
@@ -37,8 +38,7 @@ class _ProductHomeState extends State<ProductHome> {
       },
     );
     if (response['status'] == "success") {
-      return Navigator.of(context)
-          .pushNamedAndRemoveUntil("veiwMain", (route) => false);
+      return Navigator.of(context).pushNamedAndRemoveUntil("veiwMain", (route) => false);
     } else {}
   }
 
@@ -56,8 +56,7 @@ class _ProductHomeState extends State<ProductHome> {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return Image(
-                      image: NetworkImage(
-                          "https://deepmindksa.com/graduation_project_ajar/upload/${snapshot.data["Data"]["pahtImg"]}"),
+                      image: NetworkImage("https://deepmindksa.com/graduation_project_ajar/upload/${snapshot.data["Data"]["pahtImg"]}"),
                       fit: BoxFit.cover,
                     );
                   }
@@ -82,8 +81,7 @@ class _ProductHomeState extends State<ProductHome> {
                   idlessor = snapshot.data["Data"]["idUser"].toString();
                   nameItme = snapshot.data["Data"]["name"];
                   return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -93,59 +91,34 @@ class _ProductHomeState extends State<ProductHome> {
                             shrinkWrap: true,
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "${snapshot.data['Data']['name']}",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromRGBO(37, 37, 37, 1),
-                                        fontFamily: "ReadexPro"),
+                                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color.fromRGBO(37, 37, 37, 1), fontFamily: "ReadexPro"),
                                   ),
                                   Row(
                                     children: [
                                       Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 7),
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Color.fromRGBO(85, 164, 195, 1),
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
+                                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+                                        decoration: BoxDecoration(color: Color.fromRGBO(85, 164, 195, 1), borderRadius: BorderRadius.circular(10)),
                                         child: Text(
                                           "${snapshot.data['Data']['type']}",
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromRGBO(
-                                                  252, 255, 252, 1),
-                                              fontFamily: "ReadexPro"),
+                                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color.fromRGBO(252, 255, 252, 1), fontFamily: "ReadexPro"),
                                         ),
                                       ),
                                       SizedBox(
                                         width: 13,
                                       ),
                                       Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 7),
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Color.fromRGBO(85, 164, 195, 1),
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
+                                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+                                        decoration: BoxDecoration(color: Color.fromRGBO(85, 164, 195, 1), borderRadius: BorderRadius.circular(10)),
                                         child: Text(
                                           "${snapshot.data['Data']['region']}",
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromRGBO(
-                                                  252, 255, 252, 1),
-                                              fontFamily: "ReadexPro"),
+                                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color.fromRGBO(252, 255, 252, 1), fontFamily: "ReadexPro"),
                                         ),
                                       ),
                                     ],
@@ -156,27 +129,19 @@ class _ProductHomeState extends State<ProductHome> {
                                 width: double.infinity,
                                 constraints: BoxConstraints(minHeight: 200),
                                 margin: EdgeInsets.only(top: 20),
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(252, 255, 252, 1),
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 5,
-                                        blurRadius: 10,
-                                        offset: Offset(0,
-                                            -1), // changes position of shadow
-                                      ),
-                                    ]),
+                                decoration: BoxDecoration(color: Color.fromRGBO(252, 255, 252, 1), borderRadius: BorderRadius.circular(10), boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 5,
+                                    blurRadius: 10,
+                                    offset: Offset(0, -1), // changes position of shadow
+                                  ),
+                                ]),
                                 child: Center(
                                   child: Text(
                                     '${snapshot.data['Data']['description']}',
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromRGBO(37, 37, 37, 1),
-                                        fontFamily: "ReadexPro"),
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color.fromRGBO(37, 37, 37, 1), fontFamily: "ReadexPro"),
                                   ),
                                 ),
                               ),
@@ -189,53 +154,30 @@ class _ProductHomeState extends State<ProductHome> {
                             padding: EdgeInsets.all(8),
                             width: double.infinity,
                             height: 90,
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(0, 30, 65, 1),
-                                borderRadius: BorderRadius.circular(10)),
+                            decoration: BoxDecoration(color: Color.fromRGBO(0, 30, 65, 1), borderRadius: BorderRadius.circular(10)),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
                                   flex: 8,
-                                  child: Container(
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      child: snapshot.data['Data']['idUser']
-                                                  .toString() ==
-                                              sharedPreferences.getString("id")
-                                          ? buttonUserYes(context, screenWidth,
-                                              screenHeight)
-                                          : buttonUserNo(context, screenWidth,
-                                              screenHeight)),
+                                  child: Container(width: double.infinity, height: double.infinity, child: snapshot.data['Data']['idUser'].toString() == sharedPreferences.getString("id") ? buttonUserYes(context, screenWidth, screenHeight) : buttonUserNo(context, screenWidth, screenHeight)),
                                 ),
                                 Container(
                                   child: Flexible(
                                       flex: 2,
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Text(
                                             'ر.س.',
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromRGBO(
-                                                    252, 255, 252, 1),
-                                                fontFamily: "ReadexPro"),
+                                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color.fromRGBO(252, 255, 252, 1), fontFamily: "ReadexPro"),
                                           ),
                                           Text(
                                             '${snapshot.data['Data']['price']}',
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromRGBO(
-                                                    252, 255, 252, 1),
-                                                fontFamily: "ReadexPro"),
+                                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color.fromRGBO(252, 255, 252, 1), fontFamily: "ReadexPro"),
                                           ),
                                         ],
                                       )),
@@ -264,8 +206,7 @@ class _ProductHomeState extends State<ProductHome> {
         ));
   }
 
-  TextButton buttonUserNo(
-      BuildContext context, double screenWidth, double screenHeight) {
+  TextButton buttonUserNo(BuildContext context, double screenWidth, double screenHeight) {
     return TextButton(
         onPressed: () {
           showDialog(
@@ -285,11 +226,7 @@ class _ProductHomeState extends State<ProductHome> {
                                     Text(
                                       "اولا يجب الالتزام بالموعد الخاص بسداد رسوم الإيجار. لابد من توثيق العقد من خلال أحد الموثقين (عقد الالكتروني).ويجب المحافظة على شكل والجودة الخاص بالسلعة المؤجرة من قبل الاطراف وأيضا المحافظة على الأشياء التي توجد بالسلعة المؤجرة.",
                                       textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color.fromRGBO(37, 37, 37, 1),
-                                          fontFamily: "ReadexPro"),
+                                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color.fromRGBO(37, 37, 37, 1), fontFamily: "ReadexPro"),
                                     ),
                                   ],
                                 ),
@@ -297,8 +234,7 @@ class _ProductHomeState extends State<ProductHome> {
                               Flexible(
                                 flex: 2,
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -306,12 +242,7 @@ class _ProductHomeState extends State<ProductHome> {
                                         Text(
                                           'تم الاطلع على الشروط',
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.bold,
-                                              color:
-                                                  Color.fromRGBO(37, 37, 37, 1),
-                                              fontFamily: "ReadexPro"),
+                                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color.fromRGBO(37, 37, 37, 1), fontFamily: "ReadexPro"),
                                         ),
                                         Checkbox(
                                             value: checRead,
@@ -326,29 +257,150 @@ class _ProductHomeState extends State<ProductHome> {
                                       child: TextButton(
                                           onPressed: () {
                                             checRead == true
-                                                ? print("التعديل هنا")
+                                                ? showDialog(
+                                                    context: context,
+                                                    builder: (context) => StatefulBuilder(
+                                                        builder: (context, setState) => AlertDialog(
+                                                              content: Container(
+                                                                width: screenWidth * 0.90,
+                                                                height: screenHeight * 0.60,
+                                                                child: Column(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    Column(
+                                                                      children: [
+                                                                        Text(
+                                                                          'رمز التحقق',
+                                                                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height: 20,
+                                                                        ),
+                                                                        Form(
+                                                                          child: Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                            children: [
+                                                                              SizedBox(
+                                                                                height: 68,
+                                                                                width: 50,
+                                                                                child: TextFormField(
+                                                                                  onChanged: (value) {
+                                                                                    if (value.length == 1) {
+                                                                                      FocusScope.of(context).nextFocus();
+                                                                                    }
+                                                                                  },
+                                                                                  style: TextStyle(fontSize: 18),
+                                                                                  decoration: const InputDecoration(
+                                                                                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 2, color: Color.fromRGBO(37, 37, 37, 1)), borderRadius: BorderRadius.all(Radius.circular(15))),
+                                                                                    border: OutlineInputBorder(borderSide: BorderSide(width: 2, color: Color.fromRGBO(37, 37, 37, 1)), borderRadius: BorderRadius.all(Radius.circular(15))),
+                                                                                  ),
+                                                                                  keyboardType: TextInputType.number,
+                                                                                  textAlign: TextAlign.center,
+                                                                                  inputFormatters: [
+                                                                                    LengthLimitingTextInputFormatter(1),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: 68,
+                                                                                width: 50,
+                                                                                child: TextFormField(
+                                                                                  onChanged: (value) {
+                                                                                    if (value.length == 1) {
+                                                                                      FocusScope.of(context).nextFocus();
+                                                                                    }
+                                                                                  },
+                                                                                  style: TextStyle(fontSize: 18),
+                                                                                  decoration: const InputDecoration(
+                                                                                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 2, color: Color.fromRGBO(37, 37, 37, 1)), borderRadius: BorderRadius.all(Radius.circular(15))),
+                                                                                    border: OutlineInputBorder(borderSide: BorderSide(width: 2, color: Color.fromRGBO(37, 37, 37, 1)), borderRadius: BorderRadius.all(Radius.circular(15))),
+                                                                                  ),
+                                                                                  keyboardType: TextInputType.number,
+                                                                                  textAlign: TextAlign.center,
+                                                                                  inputFormatters: [
+                                                                                    LengthLimitingTextInputFormatter(1),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: 68,
+                                                                                width: 50,
+                                                                                child: TextFormField(
+                                                                                  onChanged: (value) {
+                                                                                    if (value.length == 1) {
+                                                                                      FocusScope.of(context).nextFocus();
+                                                                                    }
+                                                                                  },
+                                                                                  style: TextStyle(fontSize: 18),
+                                                                                  decoration: const InputDecoration(
+                                                                                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 2, color: Color.fromRGBO(37, 37, 37, 1)), borderRadius: BorderRadius.all(Radius.circular(15))),
+                                                                                    border: OutlineInputBorder(borderSide: BorderSide(width: 2, color: Color.fromRGBO(37, 37, 37, 1)), borderRadius: BorderRadius.all(Radius.circular(15))),
+                                                                                  ),
+                                                                                  keyboardType: TextInputType.number,
+                                                                                  textAlign: TextAlign.center,
+                                                                                  inputFormatters: [
+                                                                                    LengthLimitingTextInputFormatter(1),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: 68,
+                                                                                width: 50,
+                                                                                child: TextFormField(
+                                                                                  onChanged: (value) {
+                                                                                    if (value.length == 1) {
+                                                                                      FocusScope.of(context).nextFocus();
+                                                                                    }
+                                                                                  },
+                                                                                  style: TextStyle(fontSize: 18),
+                                                                                  decoration: const InputDecoration(
+                                                                                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 2, color: Color.fromRGBO(37, 37, 37, 1)), borderRadius: BorderRadius.all(Radius.circular(15))),
+                                                                                    border: OutlineInputBorder(borderSide: BorderSide(width: 2, color: Color.fromRGBO(37, 37, 37, 1)), borderRadius: BorderRadius.all(Radius.circular(15))),
+                                                                                  ),
+                                                                                  keyboardType: TextInputType.number,
+                                                                                  textAlign: TextAlign.center,
+                                                                                  inputFormatters: [
+                                                                                    LengthLimitingTextInputFormatter(1),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Container(
+                                                                      width: double.infinity,
+                                                                      child: TextButton(
+                                                                          onPressed: () {},
+                                                                          style: TextButton.styleFrom(
+                                                                            padding: EdgeInsets.symmetric(vertical: 15),
+                                                                            backgroundColor: checRead == true ? Color.fromRGBO(0, 30, 65, 1) : Color.fromRGBO(0, 30, 65, 0.5),
+                                                                            shape: RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                            ),
+                                                                          ),
+                                                                          child: Text(
+                                                                            'تحقق',
+                                                                            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color.fromRGBO(252, 255, 252, 1), fontFamily: "ReadexPro"),
+                                                                          )),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            )))
                                                 : null;
                                           },
                                           style: TextButton.styleFrom(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 15),
-                                            backgroundColor: checRead == true
-                                                ? Color.fromRGBO(0, 30, 65, 1)
-                                                : Color.fromRGBO(
-                                                    0, 30, 65, 0.5),
+                                            padding: EdgeInsets.symmetric(vertical: 15),
+                                            backgroundColor: checRead == true ? Color.fromRGBO(0, 30, 65, 1) : Color.fromRGBO(0, 30, 65, 0.5),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                                              borderRadius: BorderRadius.circular(10),
                                             ),
                                           ),
                                           child: Text(
                                             'موافق',
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromRGBO(
-                                                    252, 255, 252, 1),
-                                                fontFamily: "ReadexPro"),
+                                            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color.fromRGBO(252, 255, 252, 1), fontFamily: "ReadexPro"),
                                           )),
                                     ),
                                   ],
@@ -370,11 +422,7 @@ class _ProductHomeState extends State<ProductHome> {
           children: [
             Text(
               "استأجر",
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(37, 37, 37, 1),
-                  fontFamily: "ReadexPro"),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color.fromRGBO(37, 37, 37, 1), fontFamily: "ReadexPro"),
             ),
             SizedBox(
               width: 20,
@@ -388,8 +436,7 @@ class _ProductHomeState extends State<ProductHome> {
         ));
   }
 
-  TextButton buttonUserYes(
-      BuildContext context, double screenWidth, double screenHeight) {
+  TextButton buttonUserYes(BuildContext context, double screenWidth, double screenHeight) {
     return TextButton(
         onPressed: () {
           sharedPreferences.setString("idItem", "${id}");
@@ -409,11 +456,7 @@ class _ProductHomeState extends State<ProductHome> {
           children: [
             Text(
               "تعديل",
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(37, 37, 37, 1),
-                  fontFamily: "ReadexPro"),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color.fromRGBO(37, 37, 37, 1), fontFamily: "ReadexPro"),
             ),
             SizedBox(
               width: 20,
