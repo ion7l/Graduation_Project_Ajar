@@ -1,9 +1,8 @@
 import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:graduation_project/main.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,8 +19,16 @@ class _ProductState extends State<Product> {
   String type = "النوع";
   String loc = "المنطقة";
 
+  String code = "";
+
+  final TextEditingController one = new TextEditingController();
+  final TextEditingController two = new TextEditingController();
+  final TextEditingController thre = new TextEditingController();
+  final TextEditingController four = new TextEditingController();
+
   final TextEditingController name = new TextEditingController();
   final TextEditingController descrep = new TextEditingController();
+  final TextEditingController Terms = new TextEditingController();
   final TextEditingController prise = new TextEditingController();
 
   File? myfile;
@@ -46,28 +53,62 @@ class _ProductState extends State<Product> {
     } else {
       var formData = formProduct.currentState;
       if (formData!.validate()) {
-        var response = await _crud.postRequestwithFile(
-            "https://deepmindksa.com/graduation_project_ajar/porductupload.php",
-            {
-              "name": name.text,
-              "descrep": descrep.text,
-              "type": type,
-              "loc": loc,
-              "prise": prise.text,
-              "idUser": sharedPreferences.getString("id")
-            },
-            myfile!);
+        if ("${one.text + two.text + thre.text + four.text}" == code) {
+          var response = await _crud.postRequestwithFile(
+              "https://deepmindksa.com/graduation_project_ajar/porductupload.php",
+              {
+                "name": name.text,
+                "descrep": descrep.text,
+                "terms": Terms.text,
+                "type": type,
+                "loc": loc,
+                "prise": prise.text,
+                "idUser": sharedPreferences.getString("id")
+              },
+              myfile!);
 
-        if (response['status'] == "success") {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil("veiwMain", (route) => false);
-        } else {}
+          if (response['status'] == "success") {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil("veiwMain", (route) => false);
+          } else {}
+        } else {
+          return AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            animType: AnimType.scale,
+            width: 350,
+            title: 'خطأ',
+            titleTextStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color.fromRGBO(37, 37, 37, 1),
+                fontFamily: "ReadexPro"),
+            desc: 'OTP غير صحيح',
+            descTextStyle: TextStyle(
+                fontSize: 16,
+                color: Color.fromRGBO(37, 37, 37, 1),
+                fontFamily: "ReadexPro"),
+            btnOkOnPress: () {},
+          )..show();
+        }
       }
     }
   }
 
+  sendTomail() async {
+    var response = await _crud.postResponse(
+      "https://deepmindksa.com/graduation_project_ajar/sendEmail.php",
+      {"id": sharedPreferences.getString("id"), "service": "نشر"},
+    );
+    if (response['code'] != null) {
+      code = response['code'];
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -140,6 +181,37 @@ class _ProductState extends State<Product> {
                                   style: TextStyle(fontSize: 18),
                                   decoration: const InputDecoration(
                                     labelText: "الوصف",
+                                    contentPadding: EdgeInsets.all(25),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 2,
+                                            color:
+                                                Color.fromRGBO(37, 37, 37, 1)),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(30))),
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 2,
+                                            color:
+                                                Color.fromRGBO(37, 37, 37, 1)),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(30))),
+                                  )),
+                              SizedBox(height: 25),
+                              TextFormField(
+                                  validator: (value) {
+                                    if (value!.length <= 0) {
+                                      return "ادخل بنود العقد";
+                                    }
+                                    return null;
+                                  },
+                                  controller: Terms,
+                                  textDirection: TextDirection.rtl,
+                                  minLines: 3,
+                                  maxLines: 5,
+                                  style: TextStyle(fontSize: 18),
+                                  decoration: const InputDecoration(
+                                    labelText: "بنود",
                                     contentPadding: EdgeInsets.all(25),
                                     enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -418,7 +490,8 @@ class _ProductState extends State<Product> {
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: TextButton(
                       onPressed: () async {
-                        sendPorduct();
+                        sendTomail();
+                        OTP(context, screenWidth, screenHeight);
                       },
                       child: Text(
                         "نشر",
@@ -434,5 +507,200 @@ class _ProductState extends State<Product> {
             ),
           )),
     );
+  }
+
+  OTP(BuildContext context, double screenWidth, double screenHeight) {
+    return showDialog(
+        context: context,
+        builder: (context) => StatefulBuilder(
+            builder: (context, setState) => AlertDialog(
+                  content: Container(
+                    width: screenWidth * 0.90,
+                    height: screenHeight * 0.60,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              'رمز التحقق',
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Form(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  SizedBox(
+                                    height: 68,
+                                    width: 50,
+                                    child: TextFormField(
+                                      controller: one,
+                                      onChanged: (value) {
+                                        if (value.length == 1) {
+                                          FocusScope.of(context).nextFocus();
+                                        }
+                                      },
+                                      style: TextStyle(fontSize: 18),
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 2,
+                                                color: Color.fromRGBO(
+                                                    37, 37, 37, 1)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 2,
+                                                color: Color.fromRGBO(
+                                                    37, 37, 37, 1)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      textAlign: TextAlign.center,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(1),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 68,
+                                    width: 50,
+                                    child: TextFormField(
+                                      controller: two,
+                                      onChanged: (value) {
+                                        if (value.length == 1) {
+                                          FocusScope.of(context).nextFocus();
+                                        }
+                                      },
+                                      style: TextStyle(fontSize: 18),
+                                      decoration: const InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 2,
+                                                color: Color.fromRGBO(
+                                                    37, 37, 37, 1)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 2,
+                                                color: Color.fromRGBO(
+                                                    37, 37, 37, 1)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      textAlign: TextAlign.center,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(1),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 68,
+                                    width: 50,
+                                    child: TextFormField(
+                                      controller: thre,
+                                      onChanged: (value) {
+                                        if (value.length == 1) {
+                                          FocusScope.of(context).nextFocus();
+                                        }
+                                      },
+                                      style: TextStyle(fontSize: 18),
+                                      decoration: const InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 2,
+                                                color: Color.fromRGBO(
+                                                    37, 37, 37, 1)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 2,
+                                                color: Color.fromRGBO(
+                                                    37, 37, 37, 1)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      textAlign: TextAlign.center,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(1),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 68,
+                                    width: 50,
+                                    child: TextFormField(
+                                      controller: four,
+                                      onChanged: (value) {
+                                        if (value.length == 1) {
+                                          FocusScope.of(context).nextFocus();
+                                        }
+                                      },
+                                      style: TextStyle(fontSize: 18),
+                                      decoration: const InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 2,
+                                                color: Color.fromRGBO(
+                                                    37, 37, 37, 1)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 2,
+                                                color: Color.fromRGBO(
+                                                    37, 37, 37, 1)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15))),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      textAlign: TextAlign.center,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(1),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          width: double.infinity,
+                          child: TextButton(
+                              onPressed: () {
+                                sendPorduct();
+                              },
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.symmetric(vertical: 15),
+                                backgroundColor: Color.fromRGBO(0, 30, 65, 1),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: Text(
+                                'تحقق',
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromRGBO(252, 255, 252, 1),
+                                    fontFamily: "ReadexPro"),
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                )));
   }
 }

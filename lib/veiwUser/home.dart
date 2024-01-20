@@ -21,6 +21,25 @@ class _HomeState extends State<Home> {
 
   Crud _crud = Crud();
 
+  int numMessage = 0;
+
+  SelectData() async {
+    var response = await _crud.postResponse(
+        "https://deepmindksa.com/graduation_project_ajar/SelectMessages.php",
+        {"id": sharedPreferences.getString("id")});
+
+    if (response['status'] == "success") {
+      numMessage = response['length'].length;
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SelectData();
+  }
+
   String on = "*";
 
   getItems() async {
@@ -63,6 +82,31 @@ class _HomeState extends State<Home> {
             ),
           )
         ],
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil("messages", (route) => true);
+            },
+            icon: Stack(
+              children: [
+                Positioned(
+                  child: Icon(Icons.notifications_active_outlined, size: 38),
+                ),
+                numMessage > 0
+                    ? Positioned(
+                        top: 0,
+                        child: Container(
+                          width: 18,
+                          height: 18,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color.fromRGBO(255, 86, 86, 1)),
+                          child: Center(child: Text("$numMessage")),
+                        ),
+                      )
+                    : Positioned(child: Text(""))
+              ],
+            )),
       ),
       extendBody: true,
       bottomNavigationBar: Consumer<Logiec>(

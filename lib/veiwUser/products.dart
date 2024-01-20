@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../func/Logic.dart';
 import '../main.dart';
-import 'main_veiw.dart';
 
 class Products extends StatefulWidget {
   const Products({super.key});

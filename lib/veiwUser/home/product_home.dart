@@ -1,5 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -19,10 +18,14 @@ class _ProductHomeState extends State<ProductHome> {
   final TextEditingController thre = new TextEditingController();
   final TextEditingController four = new TextEditingController();
 
+  final TextEditingController terms = new TextEditingController();
+  GlobalKey<FormState> sendMess = new GlobalKey<FormState>();
+
   bool checRead = false;
   late String id;
   late String idlessor;
   late String nameItme;
+  late String Terms;
   String code = "";
 
   Crud _crud = Crud();
@@ -74,11 +77,30 @@ class _ProductHomeState extends State<ProductHome> {
   sendTomail() async {
     var response = await _crud.postResponse(
       "https://deepmindksa.com/graduation_project_ajar/sendEmail.php",
-      {"id": sharedPreferences.getString("id")},
+      {"id": sharedPreferences.getString("id"), "service": "الستأجر"},
     );
     if (response['code'] != null) {
       code = response['code'];
     } else {}
+  }
+
+  sendMessage() async {
+    var formData = sendMess.currentState;
+    if (formData!.validate()) {
+      var response = await _crud.postResponse(
+        "https://deepmindksa.com/graduation_project_ajar/sendMessage.php",
+        {
+          "idUserLessor": idlessor,
+          "idUserTenant": sharedPreferences.getString("id"),
+          "message": terms.text,
+          "nameItme": nameItme,
+        },
+      );
+      if (response['status'] == "success") {
+        return Navigator.of(context)
+            .pushNamedAndRemoveUntil("veiwMain", (route) => false);
+      } else {}
+    }
   }
 
   @override
@@ -120,6 +142,7 @@ class _ProductHomeState extends State<ProductHome> {
                   id = snapshot.data["Data"]["ID"].toString();
                   idlessor = snapshot.data["Data"]["idUser"].toString();
                   nameItme = snapshot.data["Data"]["name"];
+                  Terms = snapshot.data["Data"]["terms"];
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
@@ -318,8 +341,21 @@ class _ProductHomeState extends State<ProductHome> {
                                 flex: 6,
                                 child: ListView(
                                   children: [
+                                    Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      child: Text(
+                                        "بنود العقد",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Color.fromRGBO(37, 37, 37, 1),
+                                            fontFamily: "ReadexPro"),
+                                      ),
+                                    ),
                                     Text(
-                                      "اولا يجب الالتزام بالموعد الخاص بسداد رسوم الإيجار. لابد من توثيق العقد من خلال أحد الموثقين (عقد الالكتروني).ويجب المحافظة على شكل والجودة الخاص بالسلعة المؤجرة من قبل الاطراف وأيضا المحافظة على الأشياء التي توجد بالسلعة المؤجرة.",
+                                      "$Terms",
                                       textAlign: TextAlign.right,
                                       style: TextStyle(
                                           fontSize: 22,
@@ -340,7 +376,7 @@ class _ProductHomeState extends State<ProductHome> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          'تم الاطلع على الشروط',
+                                          'تم الاطلع على البنود',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 13,
@@ -359,37 +395,99 @@ class _ProductHomeState extends State<ProductHome> {
                                     ),
                                     Container(
                                       width: double.infinity,
-                                      child: TextButton(
-                                          onPressed: () {
-                                            if (checRead == true) {
-                                              Navigator.pop(context);
-                                              sendTomail();
-                                              return OTP(context, screenWidth,
-                                                  screenHeight);
-                                            }
-                                            return null;
-                                          },
-                                          style: TextButton.styleFrom(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 15),
-                                            backgroundColor: checRead == true
-                                                ? Color.fromRGBO(0, 30, 65, 1)
-                                                : Color.fromRGBO(
-                                                    0, 30, 65, 0.5),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                                      child: Row(
+                                        children: [
+                                          Flexible(
+                                            flex: 2,
+                                            child: Container(
+                                              width: double.infinity,
+                                              child: TextButton(
+                                                  onPressed: () {
+                                                    if (checRead == true) {
+                                                      Navigator.pop(context);
+                                                      sendTomail();
+                                                      return OTP(
+                                                          context,
+                                                          screenWidth,
+                                                          screenHeight);
+                                                    }
+                                                    return null;
+                                                  },
+                                                  style: TextButton.styleFrom(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 15),
+                                                    backgroundColor:
+                                                        checRead == true
+                                                            ? Color.fromRGBO(
+                                                                0, 30, 65, 1)
+                                                            : Color.fromRGBO(
+                                                                0, 30, 65, 0.5),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    'موافق',
+                                                    style: TextStyle(
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Color.fromRGBO(
+                                                            252, 255, 252, 1),
+                                                        fontFamily:
+                                                            "ReadexPro"),
+                                                  )),
                                             ),
                                           ),
-                                          child: Text(
-                                            'موافق',
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromRGBO(
-                                                    252, 255, 252, 1),
-                                                fontFamily: "ReadexPro"),
-                                          )),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Flexible(
+                                            flex: 2,
+                                            child: Container(
+                                              width: double.infinity,
+                                              child: TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                    terms.text = Terms;
+                                                    sendTemrs(
+                                                        context,
+                                                        screenHeight,
+                                                        screenWidth);
+                                                  },
+                                                  style: TextButton.styleFrom(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 15),
+                                                    backgroundColor:
+                                                        Color.fromRGBO(
+                                                            5, 162, 206, 1),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    'تعديل',
+                                                    style: TextStyle(
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Color.fromRGBO(
+                                                            252, 255, 252, 1),
+                                                        fontFamily:
+                                                            "ReadexPro"),
+                                                  )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -426,6 +524,114 @@ class _ProductHomeState extends State<ProductHome> {
             )
           ],
         ));
+  }
+
+  TextButton buttonUserYes(
+      BuildContext context, double screenWidth, double screenHeight) {
+    return TextButton(
+        onPressed: () {
+          sharedPreferences.setString("idItem", "${id}");
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            "updata",
+            (route) => true,
+          );
+        },
+        style: TextButton.styleFrom(
+          backgroundColor: Color.fromRGBO(252, 255, 252, 1),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "تعديل",
+              style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromRGBO(37, 37, 37, 1),
+                  fontFamily: "ReadexPro"),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Icon(
+              Icons.border_color_rounded,
+              color: Color.fromRGBO(37, 37, 37, 1),
+              size: 40,
+            )
+          ],
+        ));
+  }
+
+  sendTemrs(BuildContext context, double screenWidth, double screenHeight) {
+    return showDialog(
+        context: context,
+        builder: (context) => StatefulBuilder(
+            builder: (context, setState) => AlertDialog(
+                  content: Container(
+                    width: screenWidth * 0.90,
+                    height: screenHeight * 0.80,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Form(
+                          key: sendMess,
+                          child: TextFormField(
+                              validator: (value) {
+                                if (value!.length <= 0) {
+                                  return "ادخل الرسالة";
+                                }
+                                return null;
+                              },
+                              controller: terms,
+                              textDirection: TextDirection.rtl,
+                              minLines: 3,
+                              maxLines: 5,
+                              style: TextStyle(fontSize: 18),
+                              decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.all(25),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 2,
+                                        color: Color.fromRGBO(37, 37, 37, 1)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30))),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 2,
+                                        color: Color.fromRGBO(37, 37, 37, 1)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30))),
+                              )),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          child: TextButton(
+                              onPressed: () {
+                                sendMessage();
+                              },
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.symmetric(vertical: 15),
+                                backgroundColor: Color.fromRGBO(0, 30, 65, 1),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: Text(
+                                'ارسال',
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromRGBO(252, 255, 252, 1),
+                                    fontFamily: "ReadexPro"),
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                )));
   }
 
   OTP(BuildContext context, double screenWidth, double screenHeight) {
@@ -623,44 +829,5 @@ class _ProductHomeState extends State<ProductHome> {
                     ),
                   ),
                 )));
-  }
-
-  TextButton buttonUserYes(
-      BuildContext context, double screenWidth, double screenHeight) {
-    return TextButton(
-        onPressed: () {
-          sharedPreferences.setString("idItem", "${id}");
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            "updata",
-            (route) => true,
-          );
-        },
-        style: TextButton.styleFrom(
-          backgroundColor: Color.fromRGBO(252, 255, 252, 1),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "تعديل",
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(37, 37, 37, 1),
-                  fontFamily: "ReadexPro"),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Icon(
-              Icons.border_color_rounded,
-              color: Color.fromRGBO(37, 37, 37, 1),
-              size: 40,
-            )
-          ],
-        ));
   }
 }

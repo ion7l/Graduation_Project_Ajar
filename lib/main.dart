@@ -3,6 +3,8 @@ import 'package:graduation_project/Keys/Login.dart';
 import 'package:graduation_project/Keys/Sinup.dart';
 import 'package:graduation_project/veiwUser/account/new_Password.dart';
 import 'package:graduation_project/veiwUser/documents/document.dart';
+import 'package:graduation_project/veiwUser/home/message/Message.dart';
+import 'package:graduation_project/veiwUser/home/message/pageMessages.dart';
 import 'package:graduation_project/veiwUser/home/product_home.dart';
 import 'package:graduation_project/veiwUser/main_veiw.dart';
 import 'package:graduation_project/veiwUser/account/new_name.dart';
@@ -48,6 +50,8 @@ class MyApp extends StatelessWidget {
             "product": (context) => Product(),
             "updata":(context) => Updata(),
             "document":(context) => Document(),
+            "messages":(context) => Messags(),
+            "message":(context) => Message(),
           },
         ));
   }

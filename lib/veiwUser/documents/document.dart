@@ -15,6 +15,7 @@ class _DocumentState extends State<Document> {
   String nameItem = "";
   String nameTenant = "";
   String nameLessor = "";
+  String Terms = "";
   String? id = sharedPreferences.getString("idItem");
 
   SelectData() async {
@@ -26,6 +27,7 @@ class _DocumentState extends State<Document> {
       nameItem = response['Data']['name'];
       nameTenant = response['DataTenant']['name'];
       nameLessor = response['DataLessor']['name'];
+      Terms = response['DataTerms']['terms'];
     }
     setState(() {});
   }
@@ -80,7 +82,7 @@ class _DocumentState extends State<Document> {
                         textAlign: TextAlign.start,
                       ),
                       Text(
-                        "اولا يجب الالتزام بالموعد الخاص بسداد رسوم الإيجار. لابد من توثيق العقد من خلال أحد الموثقين (عقد الالكتروني).ويجب المحافظة على شكل والجودة الخاص بالسلعة المؤجرة من قبل الاطراف وأيضا المحافظة على الأشياء التي توجد بالسلعة المؤجرة.",
+                        "$Terms",
                         textAlign: TextAlign.right,
                         style: TextStyle(
                             fontSize: 16,
