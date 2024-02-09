@@ -1,14 +1,16 @@
 # Ajar
 
 is a graduation project for undergraduate students
-<br>
-<br>
+
 <br>
 <br>
 <div style="display: flex; justify-content: center;">
   <img src="https://raw.githubusercontent.com/ion7l/Graduation_Project_Ajar/main/images/Galaxy%20S24%20Ultra%20Mockup%20Titanium%20Gray%20Right.png" height="300">
   <img src="https://raw.githubusercontent.com/ion7l/Graduation_Project_Ajar/main/images/iPhone%2015%20Pro%20Portrait%20Left%20Mockup.png" height="300">
 </div>
+<br>
+<br>
+
 ## Project plan and objectives
 
 This project provides a solution to the difficulty of obtaining a specific commodity or displaying a commodity. It provides ease of communication between the landlord and the lessee and easy access to contracts faster without the need to go and search traditionally or display the commodity traditionally.
