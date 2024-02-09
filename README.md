@@ -4,7 +4,7 @@ is a graduation project for undergraduate students
 
 <br>
 <br>
-<div">
+<div>
   <img src="https://raw.githubusercontent.com/ion7l/Graduation_Project_Ajar/main/images/Galaxy%20S24%20Ultra%20Mockup%20Titanium%20Gray%20Right.png" height="300">
   <img src="https://raw.githubusercontent.com/ion7l/Graduation_Project_Ajar/main/images/iPhone%2015%20Pro%20Portrait%20Left%20Mockup.png" height="300">
 </div>
