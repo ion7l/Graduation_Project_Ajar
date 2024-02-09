@@ -9,9 +9,9 @@ This project provides a solution to the difficulty of obtaining a specific commo
 
 Objectives
 
-• Facilitating the rental and leasing process
-• Enhancing the security of transactions between the landlord and the tenant
-• Facilitating access to contracts
+<p>• Facilitating the rental and leasing process</p>
+<p>• Enhancing the security of transactions between the landlord and the tenant</p>
+<p>• Facilitating access to contracts</p>
 
 ## What is Ajar?
 
@@ -20,15 +20,15 @@ Real estate, vehicles, electronic devices, others
 
 ## Detailed objectives
 
--An application that works on iOS and Android
--Facilitating communication between beneficiaries to amend contracts "Flexibility in contracts"
--Electronic signature Verify Code to Email
+<p>-An application that works on iOS and Android</p>
+<p>-Facilitating communication between beneficiaries to amend contracts "Flexibility in contracts"</p>
+<p>-Electronic signature Verify Code to Email</p>
 
 ## Technologies and languages ​​used in development
 
--Dart language
--Flutter framework
--PHP language
+<p>-Dart language</p>
+<p>-Flutter framework</p>
+<p>-PHP language</p>
 -SQL language
 -MySQL database
 -Control Board for managing the database - phpMyAdmin
