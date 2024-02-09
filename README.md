@@ -1,16 +1,41 @@
-# graduation_project
+# Ajar
 
-A new Flutter project.
+is a graduation project for undergraduate students
 
-## Getting Started
+## Project plan and objectives
 
-This project is a starting point for a Flutter application.
+This project provides a solution to the difficulty of obtaining a specific commodity or displaying a commodity. It provides ease of communication between the landlord and the lessee and easy access to contracts faster without the need to go and search traditionally or display the commodity traditionally.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Objectives
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+• Facilitating the rental and leasing process
+• Enhancing the security of transactions between the landlord and the tenant
+• Facilitating access to contracts
+
+## What is Ajar?
+
+It is a rental platform that serves the customer (individuals or institutions) to display and rent many types of properties such as:-
+Real estate, vehicles, electronic devices, others
+
+## Detailed objectives
+
+-An application that works on iOS and Android
+-Facilitating communication between beneficiaries to amend contracts "Flexibility in contracts"
+-Electronic signature Verify Code to Email
+
+## Technologies and languages ​​used in development
+
+-Dart language
+-Flutter framework
+-PHP language
+-SQL language
+-MySQL database
+-Control Board for managing the database - phpMyAdmin
+-API
+
+## Technologies to help develop
+
+-GitHub
+-Flutter Flow
+-Figma
